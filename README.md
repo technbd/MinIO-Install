@@ -346,7 +346,8 @@ To migrate from an FS-backend deployment, use mc mirror or mc cp to copy your da
 
 
 > [!CAUTION]  
-> ERROR Unable to use the drive /opt/minio/data: Drive /opt/minio/data: found backend type fs, expected xl or xl-single - to migrate to a supported backend visit https://min.io/docs/minio/linux/operations/install-deploy-manage/migrate-fs-gateway.html: Invalid arguments specified 
+> ERROR Unable to use the drive /opt/minio/data: Drive /opt/minio/data: found backend type fs, expected xl or xl-single - to migrate to a supported backend visit https://min.io/docs/minio/linux/operations/install-deploy-manage/migrate-fs-gateway.html: Invalid arguments specified  
+`.minio.sys` is a special directory created by MinIO within each bucket to store metadata and configuration information. This directory is crucial for MinIO’s internal operations and helps manage object storage efficiently. Never manually delete or modify the .minio.sys directory. Doing so can corrupt the bucket’s metadata and lead to data loss or inconsistencies.
 
 
 
