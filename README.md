@@ -125,6 +125,48 @@ While the port 9000 is used for connecting to the API, MinIO automatically redir
 ---
 
 
+## Run the MinIO Docker Container:
+
+To run MinIO in a Docker container, you'll need to follow a few steps. The example above works this way:
+
+- Creates a new local directory at `/minio/data` contain the object data.
+- `--name` : name of the container.
+- `-p` : binds a local port to a container port.
+- `--user` : sets the username for the container to the policies for the **current user and user group**.
+- `-v` : sets a file path as a persistent volume location for the container to use. Mounts the host directory `/minio/data` to `/data` in the container directory.
+- `-e` : sets the environment variables MINIO_ROOT_USER and MINIO_ROOT_PASSWORD, respectively. These set the root user credentials.
+- `minio/minio server /data` : Starts the MinIO server with /data as the storage directory.
+
+
+```
+mkdir -p /minio/data
+docker pull minio/minio
+```
+
+
+ **Use the following command to start a MinIO container:**
+ 
+```
+docker run \
+   --name minio_01 \
+   -dit \
+   -p 9000:9000 \
+   -p 9001:9001 \
+   --user $(id -u):$(id -g) \
+   -e "MINIO_ROOT_USER=minio" \
+   -e "MINIO_ROOT_PASSWORD=minio@dmin" \
+   -v /minio/data:/data \
+   minio/minio server /data --console-address ":9001"
+```
+
+
+### Access the MinIO Web Interface: 
+Open your web browser and go to http://your-ip:9001. Log in with the access key and secret key you set in the environment variables.
+
+
+---
+---
+
 
 ### Install the MinIO Client (Optional):
 
