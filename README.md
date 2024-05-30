@@ -160,12 +160,53 @@ docker run \
 ```
 
 
+### Define the Docker Compose Configuration:
+
+You can also use Docker-compose to manage your MinIO service. Create a `docker-compose.yml` file in your text editor and add the following content:
+
+```
+version: '3.7'
+services:
+  minio:
+    image: minio/minio
+    container_name: minio_02
+    hostname: minio_02
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio@dmin
+    volumes:
+      - /minio/data:/data
+    #command: server /data
+    command: server /data --console-address ":9001"
+```
+
+
+```
+### Checking Syntax:
+
+docker-compose config
+docker-compose -f docker-compose.yaml config
+```
+
+
+_Start MinIO with Docker Compose  in detached mode_:
+
+```
+docker-compose up -d
+```
+
+
+
 ### Access the MinIO Web Interface: 
 Open your web browser and go to http://your-ip:9001. Log in with the access key and secret key you set in the environment variables.
 
 
 ---
 ---
+
 
 
 ### Install the MinIO Client (Optional):
@@ -399,4 +440,5 @@ To migrate from an FS-backend deployment, use mc mirror or mc cp to copy your da
 - [User Management CLI](https://min.io/docs/minio/linux/administration/identity-access-management/minio-user-management.html)
 - [Migrate from Gateway or Filesystem Mode](https://min.io/docs/minio/linux/operations/install-deploy-manage/migrate-fs-gateway.html)
 - [MinIO: Single-Node Single-Drive](https://min.io/docs/minio/container/operations/install-deploy-manage/deploy-minio-single-node-single-drive.html)
+- [MinIO Container](https://min.io/docs/minio/container/index.html)
 - [MinIO Github](https://github.com/minio/minio/)
