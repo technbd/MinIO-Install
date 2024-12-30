@@ -1,0 +1,46 @@
+[Unit]
+Description=Minio
+Documentation=https://docs.minio.io
+Wants=network-online.target
+After=network-online.target
+
+# Ensure MinIO binary is executable
+AssertFileIsExecutable=/home/rcms/minio/minio
+
+[Service]
+WorkingDirectory=/home/rcms/minio
+
+User=rcms
+Group=rcms
+
+# Load environment variables, if the file exists
+EnvironmentFile=-/home/rcms/minio/run-minio.conf
+
+
+#ExecStartPre=/bin/bash -c "[ -n \"${MINIO_VOLUMES}\" ] || echo \"Variable MINIO_VOLUMES not set in /home/rcms/minio/run-minio.conf\""
+#ExecStartPre=/bin/bash -c "[ -n \"${MINIO_DATA}\" ] || echo \"Variable MINIO_DATA not set in /home/rcms/minio/run-minio.conf\""
+
+
+# Main command to start MinIO, with configured options
+ExecStart=/home/rcms/minio/minio server $MINIO_OPTS $MINIO_DATA
+
+
+# Specifies the maximum file descriptor number that can be opened by this process
+LimitNOFILE=65536
+
+# Specifies the maximum number of threads this process can create
+TasksMax=infinity
+
+# Disable timeout logic and wait until process is stopped
+TimeoutStopSec=infinity
+
+# SIGTERM signal is used to stop Minio gracefully
+KillSignal=SIGTERM
+SendSIGKILL=no
+
+# Define valid exit codes
+SuccessExitStatus=0
+
+[Install]
+WantedBy=multi-user.target
+
