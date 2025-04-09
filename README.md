@@ -17,8 +17,8 @@ The following requirements summarize the Storage section of MinIO’s hardware r
 MinIO needs a directory to store its data. Create a directory for this purpose:
 
 ```
-mkdir -p /minio/data
-mkdir -p /opt/minio/bin
+mkdir -p /opt/Minio/data
+mkdir -p /opt/Minio/bin
 ```
 
 
@@ -26,7 +26,7 @@ mkdir -p /opt/minio/bin
 Use `wget` to download the MinIO binary:
 
 ```
-cd /opt/minio/bin
+cd /opt/Minio/bin
 wget https://dl.minio.io/server/minio/release/linux-amd64/minio
 
 chmod +x minio
@@ -53,13 +53,16 @@ Copyright: 2015-2024 MinIO, Inc.
 - `--address` : to set the API port.
 - `--console-address` : to set the Console port.
 - `minio server` : command starts the MinIO server. MinIO Server started wwith default RootUser: minioadmin and RootPass: minioadmin; like:  
-  `minio server /minio/data --console-address :9001`
+  `minio server /opt/Minio/data --console-address :9001`
 
-- The path argument `/minio/data` identifies the data directory in which the server operates.
+- The path argument `/opt/Minio/data` identifies the data directory in which the server operates.
 
 - Create a bash file to hold the environment variables, which includes the MinIO root user and root password. 
 
-Now, open a new bash file (`minio.sh`) in directory `/opt/minio/bin/` with your favorite text editor like: `vim /opt/minio/bin/minio.sh`
+
+
+Now, open a new bash file (`minio.sh`) in directory `/opt/Minio/bin` with your favorite text editor like: `vim /opt/Minio/bin/minio.sh`
+
 
 ```
 #!/bin/bash
@@ -68,18 +71,20 @@ export MINIO_ROOT_USER=minio
 export MINIO_ROOT_PASSWORD=minio@dmin
 
 #/opt/minio/bin/minio server /minio/data --address :9000
-/opt/minio/bin/minio server /minio/data --console-address :9001
+/opt/Minio/bin/minio server /opt/Minio/data --console-address :9001
 
 ### Or:###
 
-#MINIO_ROOT_USER=minio MINIO_ROOT_PASSWORD=minio@dmin /opt/minio/bin/minio server /minio/data --console-address :9001
-```
-
+#MINIO_ROOT_USER=minio MINIO_ROOT_PASSWORD=minio@dmin /opt/Minio/bin/minio server /opt/Minio/data --console-address :9001
 
 ```
-chmod +x /opt/minio/bin/*
 
-cd /opt/minio/bin
+
+
+```
+chmod +x /opt/Minio/bin/*
+
+cd /opt/Minio/bin
 ./minio.sh
 ```
 
@@ -116,7 +121,7 @@ STARTUP WARNINGS:
 
 ### Accessing MinIO:
 
-MinIO by default runs on port 9000. You can access the MinIO web interface by navigating to http://your-server-ip:9000 or Console: http://your-server-ip:9001 in your web browser.  
+MinIO by default runs on port 9000. You can access the MinIO web interface by navigating to `http://your-server-ip:9000` or Console: `http://your-server-ip:9001` in your web browser.  
 While the port 9000 is used for connecting to the API, MinIO automatically redirects browser access to the MinIO Console.
 
 
@@ -201,7 +206,7 @@ docker-compose up -d
 
 
 ### Access the MinIO Web Interface: 
-Open your web browser and go to http://your-ip:9001. Log in with the access key and secret key you set in the environment variables.
+Open your web browser and go to `http://your-ip:9001`. Log in with the access key and secret key you set in the environment variables.
 
 
 ---
@@ -209,13 +214,13 @@ Open your web browser and go to http://your-ip:9001. Log in with the access key 
 
 
 
-### Install the MinIO Client (Optional):
+## Install the MinIO Client (Optional):
 
-The MinIO Client allows you to work with your MinIO server from the commandline. MinIO provides a client called mc (MinIO Client) which you can use to manage your MinIO server. To install and configure the MinIO Client:
+The MinIO Client allows you to work with your MinIO server from the commandline. MinIO provides a client called `mc` (MinIO Client) which you can use to manage your MinIO server. To install and configure the MinIO Client:
 
 
 ```
-cd /opt/minio/bin
+cd /opt/Minio/bin
 wget https://dl.min.io/client/mc/release/linux-amd64/mc
 
 chmod +x mc
@@ -251,7 +256,10 @@ Use `mc alias set` to create a new alias associated to your local deployment. Yo
 
 ```
 mc alias set minio_name http://<your-server-ip>:9000 YOUR-ACCESS-KEY YOUR-SECRET-KEY
+```
 
+
+```
 mc alias set local http://192.168.10.190:9000 minio minio@dmin
 
     Added `local` successfully.
